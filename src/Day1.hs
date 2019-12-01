@@ -1,34 +1,18 @@
 module Day1
     ( getResult
-    , getRepeatsResult
-    , firstDup
-    , part2
+    , getRealMass
     ) where
 
-import qualified Data.Set as Set
+getMass :: Int -> Int
+getMass x = (floor (realToFrac (x `div` 3)) - 2)
 
-getItem :: String -> Int
-getItem = read . filter (/= '+')
+getRealMass :: Int -> Int -> Int
+getRealMass acc x =
+  let nextMass = getMass x
+  in
+    if (nextMass < 1) then acc
+    else getRealMass (acc + nextMass) nextMass
 
 getResult :: [String] -> Int
-getResult = sum . map getItem
+getResult = sum . map ((getRealMass 0) . read)
 
-getRepeats :: [String] -> Int -> Set.Set Int -> Int
-getRepeats list start set =
-  let (x:xs) = list
-      next = start + (getItem x)
-      in if (Set.member next set)
-        then next
-        else getRepeats xs next (Set.insert next set)
-
-getRepeatsResult :: [String] -> Int
-getRepeatsResult list = getRepeats (cycle list) 0 Set.empty
-
-firstDup :: Ord a => [a] -> Maybe a
-firstDup = go Set.empty
-  where go seen [] = Nothing
-        go seen (x:xs) | (Set.member x seen) = Just x
-                       | otherwise = go (Set.insert x seen) xs
-
-part2 :: [String] -> Maybe Int
-part2 = firstDup . scanl (+) 0 . cycle . map getItem

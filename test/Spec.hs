@@ -5,9 +5,9 @@ import Day1
 
 main :: IO ()
 main = do
-  defaultMain (testGroup "Our Library Tests" [getResultTest])
+  defaultMain (testGroup "AOC 2019 Tests" [day1Test])
 
-getResultTest :: TestTree
-getResultTest = testCase "Testing getResult now"
-  (assertEqual "Should calculate the result" 10 (getResult ["+1", "-1", "+5", "+5"]))
+day1Test :: TestTree
+day1Test = testCase "Testing getResult now"
+  (assertEqual "Should calculate the result" 966 (getRealMass 0  1969))
 
