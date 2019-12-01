@@ -6,13 +6,11 @@ module Day1
 getMass :: Int -> Int
 getMass x = (floor (realToFrac (x `div` 3)) - 2)
 
-getRealMass :: Int -> Int -> Int
-getRealMass acc x =
-  let nextMass = getMass x
-  in
-    if (nextMass < 1) then acc
-    else getRealMass (acc + nextMass) nextMass
+getRealMass :: Int -> Int
+getRealMass x =
+  go 0 (getMass x)
+  where go acc y = if (y < 1) then acc else go (acc + y) (getMass y)
 
 getResult :: [String] -> Int
-getResult = sum . map ((getRealMass 0) . read)
+getResult = sum . map (getRealMass . read)
 

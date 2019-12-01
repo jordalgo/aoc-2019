@@ -9,5 +9,5 @@ main = do
 
 day1Test :: TestTree
 day1Test = testCase "Testing getResult now"
-  (assertEqual "Should calculate the result" 966 (getRealMass 0  1969))
+  (assertEqual "Should calculate the result" 966 (getRealMass 1969))
 
