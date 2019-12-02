@@ -1,10 +1,9 @@
 module Main where
 
 import Lib
-import Day1
+import Day2
 
 main :: IO ()
 main = do
-    fileLines <- getFileLines "src/input/day1.txt"
-    let eachl = fileLines
-    putStrLn (show (getTotalMass eachl))
+    contents <- readFile "src/input/day2.txt"
+    putStrLn (show (getResult contents))
