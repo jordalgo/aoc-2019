@@ -1,16 +1,20 @@
 module Day1
-    ( getResult
+    ( getTotalMass
+    , getTotalMassWithFuel
     , getRealMass
     ) where
 
 getMass :: Int -> Int
-getMass x = (floor (realToFrac (x `div` 3)) - 2)
+getMass = (+ (-2)) . (`div` 3)
 
 getRealMass :: Int -> Int
-getRealMass x =
-  go 0 (getMass x)
+getRealMass =
+  go 0 . getMass
   where go acc y = if (y < 1) then acc else go (acc + y) (getMass y)
 
-getResult :: [String] -> Int
-getResult = sum . map (getRealMass . read)
+getTotalMass :: [String] -> Int
+getTotalMass = sum . map (getMass . read)
+
+getTotalMassWithFuel :: [String] -> Int
+getTotalMassWithFuel = sum . map (getRealMass . read)
 

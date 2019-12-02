@@ -5,9 +5,6 @@ import Day1
 
 main :: IO ()
 main = do
-    putStrLn "Hello, whats your file?"
-    name <- getLine
-    let fileName = name
-    fileLines <- getFileLines ("src/input/" ++ fileName)
+    fileLines <- getFileLines "src/input/day1.txt"
     let eachl = fileLines
-    putStrLn (show (getResult eachl))
+    putStrLn (show (getTotalMass eachl))
