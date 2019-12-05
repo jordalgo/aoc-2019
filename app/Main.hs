@@ -1,9 +1,10 @@
 module Main where
 
 import Lib
-import Day3
+import Day4
 
 main :: IO ()
 main = do
-    contents <- readFile "src/input/day3.txt"
-    putStrLn (show (getResult (lines contents)))
+    contents <- readFile "src/input/day4.txt"
+    putStrLn (show (getPart1 (lines contents)))
+    --putStrLn (show (getPart2 (lines contents)))

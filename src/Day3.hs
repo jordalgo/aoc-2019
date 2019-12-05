@@ -1,5 +1,6 @@
 module Day3
-    ( getResult
+    ( getPart1
+    , getPart2
     ) where
 
 import qualified Data.List.Split as Split
@@ -102,10 +103,10 @@ getTotalDistance tuple = distance1 - (getDistance line1 intersectionPoint) + dis
 getManhattanDistance :: (Int, Int) -> Int
 getManhattanDistance tuple = (abs x) + (abs y) where (x, y) = tuple
 
-getResult1 xs =
+getPart1 xs =
   let lineCoords = map (getLineCoordinates (0, 0) . getDirections) xs
   in foldr1 min (map (getManhattanDistance . getIntersectionPoint) (getIntersectingLines (lineCoords !! 0) (lineCoords !! 1)))
 
-getResult xs =
+getPart2 xs =
   let lineCoords = map (getPaths ((0, 0), 0) . getDirections) xs
   in foldr1 min (map getTotalDistance (getIntersectingPaths (lineCoords !!0) (lineCoords !! 1)))
