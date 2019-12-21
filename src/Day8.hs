@@ -29,12 +29,12 @@ getPixelRow acc next = imap (\index accItem -> getPixel accItem (next !! index))
 convertToColor:: [Int] -> [Char]
 convertToColor xs = map (\x -> if (x == 0) then '-' else 'x') xs
 
-getPart2 :: String -> [[Char]]
-getPart2 str = map (\x -> convertToColor x) picture
+showPixel 0 = " "
+showPixel 1 = "\x2588"
+
+getPart2 str = unlines $ chunksOf 25 image
   where
-  transparentLayer = replicate 6 (replicate 25 2)
   numInputs = map (\c -> read [c]) str
   chunks = chunksOf (25 * 6) numInputs
-  layers = map (chunksOf 25) chunks
-  picture = foldl (\acc layer -> imap (\index accRow -> getPixelRow accRow (layer !! index)) acc) transparentLayer layers
-
+  picture = map (head . dropWhile (==2)) $ transpose chunks
+  image = concatMap showPixel picture
