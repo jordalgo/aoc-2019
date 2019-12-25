@@ -20,11 +20,11 @@ getParamFromMode mode pos relativeBase program
   val = program !! pos
   nextRelativeBase = relativeBase + val
 
-getWriteParamFromMode :: Int -> Int -> Int -> [Int] -> Int
+getWriteParamFromMode :: Int -> Int -> Int -> [Int] -> (Int, [Int])
 getWriteParamFromMode mode pos relativeBase program
-  | mode == 0 = val
-  | mode == 1 = val
-  | mode == 2 = if (nextRelativeBase < programLength) then nextRelativeBase else 0
+  | mode == 0 = if (val < programLength) then (val, program) else (val, (program ++ (replicate (val - programLength + 1) 0)))
+  | mode == 1 = error "should not be in immediate mode"
+  | mode == 2 = if (nextRelativeBase < programLength) then (nextRelativeBase, program) else (nextRelativeBase, (program ++ (replicate (nextRelativeBase - programLength + 1) 0)))
   where
   programLength = length program
   val = program !! pos
@@ -62,9 +62,8 @@ intCodeComputer inputs (State {output = output, position = position, program = x
     programLength = length xs
     param1 = getParamFromMode (getParamMode 1 instruction) posP1 relBase xs
     param2 = getParamFromMode (getParamMode 2 instruction) posP2 relBase xs
-    param3 = getWriteParamFromMode (getParamMode 3 instruction) posP3 relBase xs
+    (param3, extendedProgram) = getWriteParamFromMode (getParamMode 3 instruction) posP3 relBase xs
     setterParam = if (param3 < 0) then error "setter param is negative" else param3
-    extendedProgram = if (param3 < programLength) then xs else (xs ++ (replicate (param3 - programLength + 1) 0))
 
 
 getProgram :: String -> [Int]
